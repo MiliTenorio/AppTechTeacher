@@ -33,6 +33,7 @@ class ChatDatasourceImpl implements ChatDatasource {
     );
 
     if (response.statusCode == 200) {
+      //instalar o googleai e continuar daqui
       final text = response.text ?? 'Sem resposta';
       return ChatMessageModel(message: text, isUser: false);
     } else {
