@@ -31,16 +31,15 @@ abstract class _ChatStoreBase with Store {
   Future<void> sendToGemini(String userInput) async {
     status = ChatStatus.loading;
     errorMessage = null;
+    addUserMessage(userInput);
 
     try {
-      addUserMessage(userInput);
-
       final response = await sendMessageUseCase(userInput);
+      print("aqui: store reponse $response");
       messages.add(response);
-
       status = ChatStatus.success;
     } catch (e) {
-      errorMessage = 'Erro ao enviar mensagem: $e';
+      errorMessage = 'Error sending message : $e';
       status = ChatStatus.error;
     }
   }
@@ -48,7 +47,5 @@ abstract class _ChatStoreBase with Store {
   @action
   void clearMessages() {
     messages.clear();
-    status = ChatStatus.idle;
-    errorMessage = null;
   }
 }

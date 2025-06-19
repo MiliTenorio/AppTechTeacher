@@ -1,6 +1,7 @@
+import 'package:tech_teacher/features/chat/data/datasources/chat_datasource.dart';
+import 'package:tech_teacher/features/chat/data/models/chat_message_model.dart';
 import 'package:tech_teacher/features/chat/domain/entities/chat_message.dart';
 import 'package:tech_teacher/features/chat/domain/repositories/chat_repository.dart';
-import 'package:tech_teacher/features/chat/data/datasources/chat_datasource.dart';
 
 class ChatRepositoryImpl implements ChatRepository {
   final ChatDatasource datasource;
@@ -9,7 +10,10 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Future<ChatMessage> sendMessage(String userInput) async {
-    final result = await datasource.sendMessage(userInput);
-    return result.toEntity();
+    /*final result = await datasource.sendMessage(userInput);
+    return result.toEntity();*/
+    final ChatMessageModel chat = await datasource.sendMessage(userInput);
+    print("aqui: chat repository impl ${chat.message}");
+    return ChatMessage(message: chat.message, isUser: chat.isUser);
   }
 }
