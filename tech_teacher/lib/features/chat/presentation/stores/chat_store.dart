@@ -1,17 +1,26 @@
 import 'package:mobx/mobx.dart';
-
-import '../../../chat/domain/entities/chat_message.dart';
+import 'package:tech_teacher/features/chat/domain/entities/chat_message.dart';
+import 'package:tech_teacher/features/chat/domain/usecases/send_message_usecase.dart';
 
 part 'chat_store.g.dart';
+
+enum ChatStatus { idle, loading, success, error }
 
 class ChatStore = _ChatStoreBase with _$ChatStore;
 
 abstract class _ChatStoreBase with Store {
+  final SendMessageUseCase sendMessageUseCase;
+
+  _ChatStoreBase(this.sendMessageUseCase);
+
   @observable
   ObservableList<ChatMessage> messages = ObservableList<ChatMessage>();
 
   @observable
-  bool isLoading = false;
+  ChatStatus status = ChatStatus.idle;
+
+  @observable
+  String? errorMessage;
 
   @action
   void addUserMessage(String message) {
@@ -20,27 +29,26 @@ abstract class _ChatStoreBase with Store {
 
   @action
   Future<void> sendToGemini(String userInput) async {
-    isLoading = true;
+    status = ChatStatus.loading;
+    errorMessage = null;
 
-    addUserMessage(userInput);
+    try {
+      addUserMessage(userInput);
 
-    // 🔮 Aqui futuramente entra chamada à API do Gemini
-    await Future.delayed(
-      const Duration(seconds: 1),
-    ); // Simula delay da resposta
+      final response = await sendMessageUseCase(userInput);
+      messages.add(response);
 
-    messages.add(
-      ChatMessage(
-        message: 'Resposta simulada do Gemini para "$userInput"',
-        isUser: false,
-      ),
-    );
-
-    isLoading = false;
+      status = ChatStatus.success;
+    } catch (e) {
+      errorMessage = 'Erro ao enviar mensagem: $e';
+      status = ChatStatus.error;
+    }
   }
 
   @action
   void clearMessages() {
     messages.clear();
+    status = ChatStatus.idle;
+    errorMessage = null;
   }
 }

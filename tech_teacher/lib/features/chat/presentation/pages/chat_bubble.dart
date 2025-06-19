@@ -23,12 +23,20 @@ class ChatBubble extends StatelessWidget {
             bottomLeft: Radius.circular(isUser ? 16 : 0),
             bottomRight: Radius.circular(isUser ? 0 : 16),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: isUser ? AppColors.background : AppColors.blackLetter,
-          ),
+                color: isUser ? AppColors.background : AppColors.blackLetter,
+                fontSize: 16,
+              ),
         ),
       ),
     );

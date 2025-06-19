@@ -1,16 +1,9 @@
 # tech_teacher
 
-A new Flutter project.
+This is a personal project to practise integrating applications with AI tools In this case, I'm creating a chatbot, in which the user can communicate with TechTeacher, an AI agent instructed to help people interested in learning computing.
 
-## Getting Started
+Link: [Tech Teacher](https://github.com/MiliTenorio/TechTeacher.git)
 
-This project is a starting point for a Flutter application.
+# Requirements
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- API key to connect to the Google Gemini model

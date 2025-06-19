@@ -1,4 +1,4 @@
-import '../../domain/entities/chat_message.dart';
+import 'package:tech_teacher/features/chat/domain/entities/chat_message.dart';
 
 class ChatMessageModel extends ChatMessage {
   ChatMessageModel({required super.message, required super.isUser});
